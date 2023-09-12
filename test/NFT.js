@@ -87,11 +87,10 @@ describe('NFT', () => {
         await expect(nft.connect(minter).mint(1, {value: COST})).to.be.reverted
       })
       it('does not allow maximum supply to be exceeded', async () => {
-        const FUTURE_MINT_TIME = new Date("May 26, 2030 18:00:00").getTime().toString().slice(0,10)
         const NFT = await ethers.getContractFactory('NFT')
-        nft = await NFT.deploy(NAME, SYMBOL, COST, MAX_SUPPLY, FUTURE_MINT_TIME, BASE_URI)
+        nft = await NFT.deploy(NAME, SYMBOL, COST, MAX_SUPPLY, ALLOW_MINTING_ON, BASE_URI)
   
-        await expect(nft.connect(minter).mint(100, {value: COST * 100})).to.be.reverted
+        await expect(nft.connect(minter).mint(100, {value: (ether(1000))})).to.be.reverted
       })
     })
   })
